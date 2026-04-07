@@ -1,0 +1,33 @@
+package entity.combatant;
+
+import java.util.List;
+
+import boundary.GameUI;
+import entity.item.Item;
+
+public class Warrior extends Player {
+
+    public Warrior(List<Item> items) {
+        super(items);
+        this.name = "Warrior";
+        this.hp = 260;
+        this.maxHp = 260;
+        this.attack = 40;
+        this.defense = 20;
+        this.speed = 30;
+    }
+
+    @Override
+    public void executeSpecialSkill(List<Combatant> targets, GameUI ui) {
+        if (targets.isEmpty()) return;
+        // Shield Bash: prompt is handled by caller; targets list has the chosen enemy
+        Combatant target = targets.get(0);
+        int dmg = Math.max(0, attack - target.getEffectiveDefense());
+        target.takeDamage(dmg);
+        target.applyStun(2);
+        ui.displayActionResult(name + " uses Shield Bash on " + target.getName() +
+                "! Deals " + dmg + " dmg, STUNNED for 2 turns!");
+        if (!target.isAlive())
+            ui.displayActionResult(target.getName() + " is ELIMINATED!");
+    }
+}
