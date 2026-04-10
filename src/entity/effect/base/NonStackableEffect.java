@@ -1,4 +1,4 @@
-package entity.effect;
+package entity.effect.base;
 
 public interface NonStackableEffect {
     @SuppressWarnings("unchecked")

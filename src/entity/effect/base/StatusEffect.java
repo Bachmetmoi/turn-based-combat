@@ -1,4 +1,4 @@
-package entity.effect;
+package entity.effect.base;
 
 import boundary.GameUI;
 import entity.combatant.Combatant;

@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 import boundary.GameUI;
 import entity.combatant.Combatant;
-import entity.effect.NonStackableEffect;
-import entity.effect.StatusEffect;
+import entity.effect.base.NonStackableEffect;
+import entity.effect.base.StatusEffect;
 
 /**
  * Manages all status effects for a single Combatant.

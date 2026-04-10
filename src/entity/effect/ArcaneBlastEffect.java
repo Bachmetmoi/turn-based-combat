@@ -3,6 +3,8 @@ package entity.effect;
 import boundary.GameUI;
 import entity.combatant.Combatant;
 import entity.combatant.helpers.StatField;
+import entity.effect.base.NonStackableEffect;
+import entity.effect.base.PermanentStatEffect;
 
 public class ArcaneBlastEffect extends PermanentStatEffect implements NonStackableEffect {
     public ArcaneBlastEffect(int bonus) { 

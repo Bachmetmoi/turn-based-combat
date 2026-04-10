@@ -2,6 +2,8 @@ package entity.effect;
 
 import boundary.GameUI;
 import entity.combatant.Combatant;
+import entity.effect.base.DurationEffect;
+import entity.effect.base.NonStackableEffect;
 
 public class SmokeBombEffect extends DurationEffect implements NonStackableEffect {
     public SmokeBombEffect(int duration) { 
