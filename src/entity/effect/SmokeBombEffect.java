@@ -1,16 +1,24 @@
 package entity.effect;
 
 import boundary.GameUI;
+import entity.combatant.CombatEvent;
 import entity.combatant.Combatant;
 import entity.effect.base.DurationEffect;
 import entity.effect.base.NonStackableEffect;
 
 public class SmokeBombEffect extends DurationEffect implements NonStackableEffect {
     public SmokeBombEffect(int duration) { 
-        super("Smoke Bomb", duration, true);
+        super("Smoke Bomb", duration);
+        addTrigger(CombatEvent.ATTACKED, this::onDamageTaken);
+        addTrigger(CombatEvent.TURN_START, this::tick);
     }
 
     public void apply(Combatant target, GameUI ui) {}
+
+    private boolean onDamageTaken(Combatant target, GameUI ui) { 
+        ui.displayActionResult("0 damage (Smoke Bomb active)!");
+        return false; 
+    }
 
     @Override
     @SuppressWarnings("unchecked")

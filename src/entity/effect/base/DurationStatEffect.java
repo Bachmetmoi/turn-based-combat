@@ -1,6 +1,7 @@
 package entity.effect.base;
 
 import boundary.GameUI;
+import entity.combatant.CombatEvent;
 import entity.combatant.Combatant;
 import entity.combatant.helpers.StatField;
 
@@ -8,10 +9,11 @@ public class DurationStatEffect extends DurationEffect {
     protected final int value;
     protected final StatField stat;
 
-    public DurationStatEffect(String name, int duration, boolean begin, int value, StatField stat) {
-        super(name, duration, begin);
+    public DurationStatEffect(String name, int duration, int value, StatField stat) {
+        super(name, duration);
         this.value = value;
         this.stat = stat;
+        addTrigger(CombatEvent.TURN_START, this::tick);
     }
 
     public int getValue() { return value; }
@@ -27,5 +29,4 @@ public class DurationStatEffect extends DurationEffect {
         target.getStatEffects().subtract(stat, value);
         super.remove(target, ui);
     }
-
 }

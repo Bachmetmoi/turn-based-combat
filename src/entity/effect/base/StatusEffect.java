@@ -3,18 +3,12 @@ package entity.effect.base;
 import boundary.GameUI;
 import entity.combatant.Combatant;
 
-public abstract class StatusEffect {
+public abstract class StatusEffect extends Observer {
     protected final String name;
-    protected final boolean begin;
 
-    public StatusEffect(String name, boolean begin) {
-        this.name = name;
-        this.begin = begin;
-    }
+    public StatusEffect(String name) { this.name = name; }
 
     public String getName() { return name; }
-    public boolean isBegin() { return begin; }
-    public void tick(Combatant target, GameUI ui) {}
 
     public abstract void apply(Combatant target, GameUI ui);
     public abstract void remove(Combatant target, GameUI ui);

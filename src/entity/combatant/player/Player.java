@@ -9,11 +9,9 @@ import entity.action.interfaces.Action;
 import entity.action.player.DefendAction;
 import entity.action.player.ItemAction;
 import entity.combatant.Combatant;
-import entity.combatant.interfaces.Healable;
-import entity.combatant.interfaces.SmokeBombable;
 import entity.item.Item;
 
-public abstract class Player extends Combatant implements Healable, SmokeBombable {
+public abstract class Player extends Combatant {
     protected List<Item> inventory;
     protected int specialCooldown = 0;
 

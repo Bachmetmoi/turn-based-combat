@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import boundary.GameUI;
 import control.strategy.TurnOrderStrategy;
 import entity.action.ActionContext;
-import entity.action.interfaces.Action;
 import entity.combatant.Combatant;
 import entity.combatant.enemy.Enemy;
 import entity.combatant.player.Player;
@@ -56,10 +55,8 @@ public class BattleEngine {
 
             for (Combatant combatant : turnOrder) {
                 if (!combatant.isAlive()) continue;
-                combatant.getStatus().tick(ui, true);
                 if (!combatant.isAlive()) continue;
                 takeTurn(combatant);
-                combatant.getStatus().tick(ui, false);
                 if (isBattleOver()) {
                     return player.isAlive();
                 }
@@ -69,15 +66,9 @@ public class BattleEngine {
 
     public void takeTurn(Combatant combatant) {
         ActionContext ctx = new ActionContext(combatant, allCombatants, null, ui);
-        Action chosen = combatant.chooseAction(ctx);
-        combatant.getActions().decrementCooldowns();
-        if (chosen == null) return;
-
-        int aliveBefore = (int) allCombatants.stream()
-                .filter(c -> c instanceof Enemy && c.isAlive()).count();
-        chosen.execute(ctx);
-        int aliveAfter = (int) allCombatants.stream()
-                .filter(c -> c instanceof Enemy && c.isAlive()).count();
+        int aliveBefore = getLivingEnemies().size();
+        combatant.takeTurn(ctx);
+        int aliveAfter = getLivingEnemies().size();
         enemiesKilled += (aliveBefore - aliveAfter);
     }
 
@@ -89,9 +80,9 @@ public class BattleEngine {
 
     private List<Enemy> getLivingEnemies() {
         return allCombatants.stream()
-                .filter(c -> c instanceof Enemy && c.isAlive())
-                .map(c -> (Enemy) c)
-                .collect(Collectors.toList());
+            .filter(c -> c instanceof Enemy && c.isAlive())
+            .map(c -> (Enemy) c)
+            .collect(Collectors.toList());
     }
 
     public int getRound()        { return currentRound; }

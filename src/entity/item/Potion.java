@@ -2,7 +2,6 @@ package entity.item;
 
 import entity.action.ActionContext;
 import entity.combatant.helpers.StatField;
-import entity.combatant.interfaces.Healable;;
 
 public class Potion extends Item {
     public Potion() { this.name = "Potion"; }
@@ -10,11 +9,11 @@ public class Potion extends Item {
     @Override
     public void use(ActionContext ctx) {
         int before = ctx.actor.getHp();
-        if (ctx.actor instanceof Healable && !used) {
-            ((Healable) ctx.actor).heal(100);
-            used = true;
-            ctx.ui.displayActionResult(ctx.actor.getName() + " uses Potion! HP: " + before +
-                    " --> " + ctx.actor.getHp() + "/" + ctx.actor.stats().get(StatField.maxHp));
-        }
+        int maxHp = ctx.actor.getStat(StatField.maxHp);
+        int after = Math.min(maxHp, before + 100);
+        ctx.actor.setHp(after);
+        used = true;
+        ctx.ui.displayActionResult(ctx.actor.getName() + " uses Potion! HP: " + before +
+                " --> " + ctx.actor.getHp() + "/" + ctx.actor.getStat(StatField.maxHp));
     }
 }

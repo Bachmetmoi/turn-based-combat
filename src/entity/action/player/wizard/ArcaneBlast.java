@@ -13,11 +13,7 @@ public class ArcaneBlast extends SpecialAttack implements SplashAttack {
     public ArcaneBlast() { super(2); }
 
     @Override
-    public void executeOn(Combatant target, ActionContext ctx) {
-        int dmg = getDamage(target, ctx);
-        target.takeDamage(dmg);
-        displayDamage(target, ctx, dmg, "Arcane Blasts");
-    }
+    public String getVerb() { return "Arcane Blasts"; }
 
     protected int getArcaneBonus(List<Combatant> targets) {
         int kills = 0;
@@ -31,7 +27,8 @@ public class ArcaneBlast extends SpecialAttack implements SplashAttack {
     public boolean execute(ActionContext ctx) {
         if (super.execute(ctx)) { 
             int bonus = getArcaneBonus(ctx.targets);
-            ctx.actor.getStatus().add(new ArcaneBlastEffect(bonus), ctx.ui);
+            ArcaneBlastEffect buff = new ArcaneBlastEffect(bonus);
+            ctx.actor.applyStatus(buff, ctx.ui);
             return true; 
         }
         return false;

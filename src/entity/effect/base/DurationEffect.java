@@ -6,8 +6,8 @@ import entity.combatant.Combatant;
 public abstract class DurationEffect extends StatusEffect {
     protected int duration;
 
-    public DurationEffect(String name, int duration, boolean begin) {
-        super(name, begin);
+    public DurationEffect(String name, int duration) {
+        super(name);
         this.duration = duration;
     }
 
@@ -18,10 +18,10 @@ public abstract class DurationEffect extends StatusEffect {
         ui.displayActionResult(name + " effect on " + target.getName() + " has expired.");
     }
 
-    @Override
-    public void tick(Combatant target, GameUI ui) {
+    public boolean tick(Combatant target, GameUI ui) {
         duration--;
         if (isExpired()) remove(target, ui);
+        return true;
     }
 
     @Override

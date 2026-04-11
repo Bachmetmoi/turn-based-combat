@@ -2,12 +2,12 @@ package entity.combatant.helpers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import boundary.GameUI;
+import entity.combatant.CombatEvent;
 import entity.combatant.Combatant;
 import entity.effect.base.NonStackableEffect;
 import entity.effect.base.StatusEffect;
@@ -72,6 +72,27 @@ public class StatusManager {
         stackable.values().forEach(all::addAll);
         return all;
     }
+    
+    public void removeExpired() {
+        // Clean up non-stackable                                                  
+        nonStackable.values().removeIf(StatusEffect::isExpired);                   
+        // Clean up stackable                                                    
+        stackable.values().forEach(list -> list.removeIf(StatusEffect::isExpired));
+        stackable.entrySet().removeIf(entry -> entry.getValue().isEmpty());        
+    }
+
+    public List<StatusEffect> active() {        
+        removeExpired();                                
+        return all();                                                              
+    }  
+
+    public boolean trigger(CombatEvent event, GameUI ui) {
+        boolean proceed = true;
+        for (StatusEffect e : active()) {
+            proceed = proceed && e.trigger(event, owner, ui);
+        }
+        return proceed;
+    }
 
     /**
      * Returns true if any effect of the given type is currently active.
@@ -79,41 +100,6 @@ public class StatusManager {
     public boolean contains(Class<? extends StatusEffect> type) {
         return nonStackable.containsKey(type) ||
             stackable.getOrDefault(type, new ArrayList<>()).stream().anyMatch(e -> !e.isExpired());
-    }
-
-
-    /**
-     * Ticks all effects matching the given begin flag.
-     * begin=true  → start-of-turn effects
-     * begin=false → end-of-turn effects
-     */
-    public void tick(GameUI ui, boolean begin) {
-        // Tick non-stackable effects
-        Iterator<Map.Entry<Class<? extends StatusEffect>, StatusEffect>> mapIt = nonStackable.entrySet().iterator();
-        while (mapIt.hasNext()) {
-            StatusEffect e = mapIt.next().getValue();
-            if (e.isBegin() != begin) continue;
-            e.tick(owner, ui);
-            if (e.isExpired()) {
-                mapIt.remove();
-            }
-        }
-
-        // Tick stackable effects — iterate each type's list
-        for (List<StatusEffect> effects : stackable.values()) {
-            Iterator<StatusEffect> listIt = effects.iterator();
-            while (listIt.hasNext()) {
-                StatusEffect e = listIt.next();
-                if (e.isBegin() != begin) continue;
-                e.tick(owner, ui);
-                if (e.isExpired()) {
-                    listIt.remove();
-                }
-            }
-        }
-
-        // Clean up empty stackable lists from the map
-        stackable.entrySet().removeIf(entry -> entry.getValue().isEmpty());
     }
 
     @Override
@@ -124,6 +110,4 @@ public class StatusManager {
                 .map(StatusEffect::toString)
                 .collect(Collectors.joining(" "));
     }
-
-
 }

@@ -6,12 +6,15 @@ public abstract class SpecialAttack implements Attack {
     protected int cooldown;
     protected int specialCooldown;
 
-    public SpecialAttack(int cooldown) { this.cooldown = 0; this.specialCooldown = cooldown; }
+    public SpecialAttack(int cooldown) { 
+        this.cooldown = 0; 
+        this.specialCooldown = cooldown; 
+    }
 
     public void resetCooldown() { cooldown = specialCooldown; }
     public int getCooldown() { return cooldown; }
     public void setCooldown(int cooldown) { this.cooldown = cooldown; }
-    public void decrementCooldown() { cooldown--; }
+    public void decrementCooldown() { if (cooldown > 0) cooldown--; }
     public boolean isReady(ActionContext ctx) { return cooldown <= 0; }
 
     @Override

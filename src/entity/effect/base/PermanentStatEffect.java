@@ -8,8 +8,8 @@ public class PermanentStatEffect extends PermanentEffect {
     protected final int value;
     protected final StatField stat;
     
-    public PermanentStatEffect(String name, boolean begin, int value, StatField stat) {
-        super(name, begin);
+    public PermanentStatEffect(String name, int value, StatField stat) {
+        super(name);
         this.value = value;
         this.stat = stat;
     }
