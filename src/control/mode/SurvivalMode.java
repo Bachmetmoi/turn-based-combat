@@ -5,7 +5,7 @@ import control.BattleEngine;
 import entity.level.Difficulty;
 import entity.level.Level;
 
-public class SurvivalMode implements GameMode {
+public class SurvivalMode extends GameMode {
 
     @Override
     public String getName() { return "Survival Mode"; }
@@ -36,6 +36,4 @@ public class SurvivalMode implements GameMode {
         }
     }
 
-    @Override public boolean allowItemSelection()   { return true;  }
-    @Override public boolean allowWeaponSelection() { return true;  }
 }

@@ -5,7 +5,9 @@ import control.BattleEngine;
 import entity.level.Difficulty;
 import entity.level.Level;
 
-public class ChallengeMode implements GameMode {
+public class ChallengeMode extends GameMode {
+    public final boolean allowItemSelection = false;
+    public final boolean allowWeaponSelection = false;
 
     @Override
     public String getName() { return "Challenge Mode"; }
@@ -29,8 +31,4 @@ public class ChallengeMode implements GameMode {
             ui.displayActionResult("--- Challenge failed. Adapt your tactics and try again! ---");
         }
     }
-
-    @Override public boolean allowItemSelection()   { return false; }
-
-    @Override public boolean allowWeaponSelection() { return false; }
 }

@@ -5,7 +5,7 @@ import control.BattleEngine;
 import entity.level.Difficulty;
 import entity.level.Level;
 
-public class TimedMode implements GameMode {
+public class TimedMode extends GameMode {
 
     private static final int ROUND_LIMIT = 10;
 
@@ -42,6 +42,4 @@ public class TimedMode implements GameMode {
 
     public int getScore() { return enemiesKilled; }
 
-    @Override public boolean allowItemSelection()   { return true;  }
-    @Override public boolean allowWeaponSelection() { return true;  }
 }

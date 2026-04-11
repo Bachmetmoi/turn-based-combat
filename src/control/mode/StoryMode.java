@@ -5,27 +5,31 @@ import control.BattleEngine;
 import entity.level.Difficulty;
 import entity.level.Level;
 
-public class StoryMode implements GameMode {
+public class StoryMode extends GameMode {
 
+    // TODO: Remove as this is not necessary. Use Difficluty.values() directly in the method body instead
     private static final Difficulty[] STORY_LEVELS = {
             Difficulty.EASY,
             Difficulty.MEDIUM,
             Difficulty.HARD
     };
 
+
     @Override
     public String getName() { return "Story Mode"; }
+
+    // TODO: Implement as getLevels instead
+    /*
+    public Stream<Level> getLevels() {
+        return Stream.of(Difficulty.values()).map(e -> new Level(e)); 
+    }
+    */
 
     @Override
     public Level getNextLevel(int roundNumber) {
         int idx = roundNumber - 1;
         if (idx >= STORY_LEVELS.length) return null;
         return new Level(STORY_LEVELS[idx]);
-    }
-
-    @Override
-    public boolean isBattleOver(BattleEngine engine) {
-        return engine.isBattleOver();
     }
 
     @Override
@@ -38,6 +42,4 @@ public class StoryMode implements GameMode {
         }
     }
 
-    @Override public boolean allowItemSelection()   { return true; }
-    @Override public boolean allowWeaponSelection() { return true; }
 }
