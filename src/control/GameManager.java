@@ -4,21 +4,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import boundary.GameUI;
+import boundary.UserInterface;
 import control.mode.GameMode;
 import control.strategy.SpeedBasedTurnOrder;
-import entity.combatant.helpers.EquipmentManager;
 import entity.combatant.player.Player;
-import entity.combatant.player.Warrior;
-import entity.combatant.player.Wizard;
+import entity.combatant.player.PlayerFactory;
 import entity.equipment.Equipment;
 import entity.item.Item;
-import entity.item.Potion;
 import entity.level.Level;
 
 public class GameManager {
 
-    private final GameUI ui = new GameUI();
+    private final UserInterface ui;
+
+    public GameManager(UserInterface ui) {
+        this.ui = ui;
+    }
 
     public void startGame() {
         ui.displayWelcome();
@@ -63,7 +64,7 @@ public class GameManager {
         while (levels.hasNext()) {
             Level level = levels.next();
 
-            Player player = createPlayer(playerType, cloneItems(itemChoices), weaponChoice, artifactChoice);
+            Player player = PlayerFactory.createPlayer(playerType, cloneItems(itemChoices), weaponChoice, artifactChoice);
             BattleEngine engine = new BattleEngine(ui, new SpeedBasedTurnOrder(), level, player, levelNumber);
 
             engine.startBattle();
@@ -77,22 +78,10 @@ public class GameManager {
         return true;
     }
 
-    private Player createPlayer(int type, List<Item> items, Equipment weapon, Equipment artifact) {
-        EquipmentManager equipment = new EquipmentManager(weapon, artifact);
-        if (type == 1) return new Warrior(items, equipment);
-        return new Wizard(items, equipment);
-    }
-
     private List<Item> cloneItems(List<Item> items) {
         List<Item> copies = new ArrayList<>();
         for (Item item : items) {
-            if (item instanceof Potion) {
-                copies.add(new Potion());
-            } else if (item instanceof entity.item.PowerStone) {
-                copies.add(new entity.item.PowerStone());
-            } else if (item instanceof entity.item.SmokeBomb) {
-                copies.add(new entity.item.SmokeBomb());
-            }
+            copies.add(item.copy());
         }
         return copies;
     }

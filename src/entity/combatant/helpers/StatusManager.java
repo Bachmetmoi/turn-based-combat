@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import boundary.GameUI;
+import boundary.UserInterface;
 import entity.action.ActionContext;
 import entity.combatant.CombatEvent;
 import entity.combatant.Combatant;
@@ -34,7 +34,7 @@ public class StatusManager {
     }
 
 
-    public void add(StatusEffect effect, GameUI ui) {
+    public void add(StatusEffect effect, UserInterface ui) {
         if (effect instanceof NonStackableEffect) {
             NonStackableEffect e = (NonStackableEffect) effect;
             // Since effects are hashed by class, can cast exsiting to non-stackable

@@ -1,6 +1,6 @@
 package entity.effect;
 
-import boundary.GameUI;
+import boundary.UserInterface;
 import entity.action.ActionContext;
 import entity.combatant.CombatEvent;
 import entity.combatant.Combatant;
@@ -15,7 +15,7 @@ public class BurnEffect extends DurationEffect {
         addTrigger(CombatEvent.TURN_END, this::tick);
     }
 
-    public void apply(Combatant target, GameUI ui) {}
+    public void apply(Combatant target, UserInterface ui) {}
 
     @Override
     public boolean tick(ActionContext ctx) {

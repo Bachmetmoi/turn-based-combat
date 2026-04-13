@@ -1,6 +1,6 @@
 package entity.effect.base;
 
-import boundary.GameUI;
+import boundary.UserInterface;
 import entity.action.ActionContext;
 import entity.combatant.Combatant;
 
@@ -12,7 +12,8 @@ public abstract class DurationEffect extends StatusEffect {
     public int getDuration() { return duration; }
     public boolean isExpired() { return duration <= 0; }
 
-    public void remove(Combatant target, GameUI ui) {
+    
+    public void remove(Combatant target, UserInterface ui) {
         ui.displayActionResult(getName() + " effect on " + target.getName() + " has expired.");
     }
 

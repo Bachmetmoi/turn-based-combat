@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import boundary.GameUI;
+import boundary.UserInterface;
 import control.strategy.TurnOrderStrategy;
 import entity.action.ActionContext;
 import entity.combatant.Combatant;
@@ -14,7 +14,7 @@ import entity.level.Level;
 
 public class BattleEngine {
 
-    private final GameUI ui;
+    private final UserInterface ui;
     private final TurnOrderStrategy turnStrategy;
     private final Level level;
     private final Player player;
@@ -23,11 +23,11 @@ public class BattleEngine {
     private int levelNumber = 1;
     private int enemiesKilled = 0;
 
-    public BattleEngine(GameUI ui, TurnOrderStrategy turnStrategy, Level level, Player player) {
+    public BattleEngine(UserInterface ui, TurnOrderStrategy turnStrategy, Level level, Player player) {
         this(ui, turnStrategy, level, player, 1);
     }
 
-    public BattleEngine(GameUI ui, TurnOrderStrategy turnStrategy, Level level, Player player, int levelNumber) {
+    public BattleEngine(UserInterface ui, TurnOrderStrategy turnStrategy, Level level, Player player, int levelNumber) {
         this.ui = ui;
         this.turnStrategy = turnStrategy;
         this.level = level;

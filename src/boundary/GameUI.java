@@ -25,7 +25,7 @@ import entity.equipment.weapon.Sword;
 import entity.item.Item;
 import entity.level.Difficulty;
 
-public class GameUI {
+public class GameUI implements UserInterface {
 
     private final Scanner scanner = new Scanner(System.in);
 

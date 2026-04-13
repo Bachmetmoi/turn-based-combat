@@ -1,6 +1,6 @@
 package entity.effect;
 
-import boundary.GameUI;
+import boundary.UserInterface;
 import entity.action.ActionContext;
 import entity.combatant.CombatEvent;
 import entity.combatant.Combatant;
@@ -13,7 +13,7 @@ public class StunEffect extends DurationEffect implements NonStackableEffect {
         addTrigger(CombatEvent.TURN_START, this::tick);
     }
 
-    public void apply(Combatant target, GameUI ui) { 
+    public void apply(Combatant target, UserInterface ui) { 
         ui.displayActionResult(target.getName() + " is STUNNED for " + duration + " turns!");
     }
 

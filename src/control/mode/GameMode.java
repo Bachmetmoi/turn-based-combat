@@ -2,7 +2,7 @@ package control.mode;
 
 import java.util.Iterator;
 import java.util.List;
-import boundary.GameUI;
+import boundary.UserInterface;
 import control.BattleEngine;
 import entity.level.Level;
 import entity.item.Item;
@@ -23,19 +23,19 @@ public abstract class GameMode implements Iterable<Level> {
         return levelGenerator.iterator();
     }
 
-    public int selectPlayerType(GameUI ui) {
+    public int selectPlayerType(UserInterface ui) {
         return ui.selectPlayerType();
     }
 
-    public List<Item> selectItems(GameUI ui) {
+    public List<Item> selectItems(UserInterface ui) {
         return ui.selectItems();
     }
 
-    public Equipment selectWeapon(GameUI ui) {
+    public Equipment selectWeapon(UserInterface ui) {
         return ui.selectWeapon();
     }
 
-    public Equipment selectArtifact(GameUI ui) {
+    public Equipment selectArtifact(UserInterface ui) {
         return ui.selectArtifact();
     }
 
@@ -43,5 +43,5 @@ public abstract class GameMode implements Iterable<Level> {
         return engine.isBattleOver();
     }
 
-    public abstract void onRoundEnd(BattleEngine engine, GameUI ui);
+    public abstract void onRoundEnd(BattleEngine engine, UserInterface ui);
 }

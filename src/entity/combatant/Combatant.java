@@ -1,6 +1,6 @@
 package entity.combatant;
 
-import boundary.GameUI;
+import boundary.UserInterface;
 import entity.action.ActionContext;
 import entity.action.interfaces.Action;
 import entity.combatant.helpers.ActionMenu;
@@ -26,6 +26,8 @@ public abstract class Combatant {
         this.actions = new ActionMenu();
     }
 
+    public abstract ActionContext.Team getTeam();
+
     public abstract Action chooseAction(ActionContext ctx);
 
     public void takeTurn(ActionContext ctx) {
@@ -40,7 +42,7 @@ public abstract class Combatant {
         status.removeExpired();
     }
 
-    public void takeDamage(int dmg, GameUI ui) {
+    public void takeDamage(int dmg, UserInterface ui) {
         hp = Math.max(0, hp - dmg);
         if (ui != null) {
             ui.displayActionResult(dmg + " dmg dealt! HP: " + hp + "/" + stats().get(StatField.maxHp));

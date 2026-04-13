@@ -7,6 +7,9 @@ public class Potion extends Item {
     public Potion() { this.name = "Potion"; }
 
     @Override
+    public Item copy() { return new Potion(); }
+
+    @Override
     public void use(ActionContext ctx) {
         int before = ctx.actor.getHp();
         int maxHp = ctx.actor.stats().get(StatField.maxHp);

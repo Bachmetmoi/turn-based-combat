@@ -7,6 +7,9 @@ public class PowerStone extends Item {
     public PowerStone() { this.name = "Power Stone"; }
 
     @Override
+    public Item copy() { return new PowerStone(); }
+
+    @Override
     public void use(ActionContext ctx) {
         SpecialAttack specialAttack = ctx.actor.actions.getSpecial();
         if (specialAttack == null) return;

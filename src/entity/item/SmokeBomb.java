@@ -7,6 +7,9 @@ public class SmokeBomb extends Item {
     public SmokeBomb() { this.name = "Smoke Bomb"; }
 
     @Override
+    public Item copy() { return new SmokeBomb(); }
+
+    @Override
     public void use(ActionContext ctx) {
         SmokeBombEffect smoke = new SmokeBombEffect(2);
         ctx.actor.status.add(smoke, ctx.ui);

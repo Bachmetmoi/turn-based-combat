@@ -1,6 +1,6 @@
 package control.mode.timed;
 
-import boundary.GameUI;
+import boundary.UserInterface;
 import control.BattleEngine;
 import control.mode.GameMode;
 
@@ -25,7 +25,7 @@ public class TimedMode extends GameMode {
     }
 
     @Override
-    public void onRoundEnd(BattleEngine engine, GameUI ui) {
+    public void onRoundEnd(BattleEngine engine, UserInterface ui) {
         int roundsLeft = ROUND_LIMIT - engine.getRound();
         enemiesKilled = engine.getEnemiesKilled();
 

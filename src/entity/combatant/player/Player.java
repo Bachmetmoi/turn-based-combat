@@ -37,6 +37,9 @@ public abstract class Player extends Combatant {
         return super.stats().add(equipment.getTotalStatBonus());
     }
 
+    @Override
+    public ActionContext.Team getTeam() { return ActionContext.Team.PLAYER; }
+
     public Action chooseAction(ActionContext ctx) {
         Action chosen = ctx.ui.selectAction(actions.all(), actions.ready(ctx), this);
         if (chosen instanceof ItemAction) {

@@ -1,6 +1,6 @@
 package entity.effect.base;
 
-import boundary.GameUI;
+import boundary.UserInterface;
 import entity.combatant.CombatEvent;
 import entity.combatant.Combatant;
 import entity.combatant.helpers.StatField;
@@ -17,12 +17,12 @@ public class DurationStatEffect extends DurationEffect {
     }
 
     @Override
-    public void apply(Combatant target, GameUI ui) {
+    public void apply(Combatant target, UserInterface ui) {
         target.statEffects.add(stat, value);
     }
 
     @Override
-    public void remove(Combatant target, GameUI ui) {
+    public void remove(Combatant target, UserInterface ui) {
         target.statEffects.subtract(stat, value);
         super.remove(target, ui);
     }

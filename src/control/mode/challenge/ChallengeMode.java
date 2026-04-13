@@ -1,12 +1,13 @@
 package control.mode.challenge;
 
 import java.util.List;
-import boundary.GameUI;
+
+import boundary.UserInterface;
 import control.BattleEngine;
+import control.mode.GameMode;
+import entity.equipment.Equipment;
 import entity.item.Item;
 import entity.item.Potion;
-import entity.equipment.Equipment;
-import control.mode.GameMode;
 
 public class ChallengeMode extends GameMode {
     public ChallengeMode() {
@@ -20,25 +21,25 @@ public class ChallengeMode extends GameMode {
     public String getDescription() { return "Fixed loadout (Warrior + 2 Potions), Boss battle"; }
 
     @Override
-    public int selectPlayerType(GameUI ui) {
+    public int selectPlayerType(UserInterface ui) {
         ui.displayActionResult("Challenge Mode: Warrior selected as fixed class.");
         return 1;
     }
 
     @Override
-    public List<Item> selectItems(GameUI ui) {
+    public List<Item> selectItems(UserInterface ui) {
         ui.displayActionResult("Challenge Mode: 2x Potion assigned as fixed items.");
         return List.of(new Potion(), new Potion());
     }
 
     @Override
-    public Equipment selectWeapon(GameUI ui) {
+    public Equipment selectWeapon(UserInterface ui) {
         ui.displayActionResult("Challenge Mode: no equipment selected.");
         return null;
     }
 
     @Override
-    public Equipment selectArtifact(GameUI ui) {
+    public Equipment selectArtifact(UserInterface ui) {
         return null;
     }
 
@@ -48,7 +49,7 @@ public class ChallengeMode extends GameMode {
     }
 
     @Override
-    public void onRoundEnd(BattleEngine engine, GameUI ui) {
+    public void onRoundEnd(BattleEngine engine, UserInterface ui) {
         if (engine.getPlayer().isAlive()) {
             ui.displayActionResult("--- Challenge complete! You conquered Boss mode with a fixed loadout! ---");
         } else {

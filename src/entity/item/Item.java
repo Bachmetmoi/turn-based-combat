@@ -9,5 +9,7 @@ public abstract class Item {
     public String getName() { return name; }
     public boolean isUsed() { return used; }
 
+    public abstract Item copy();
+
     public abstract void use(ActionContext ctx);
 }

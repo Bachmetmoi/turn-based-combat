@@ -1,6 +1,6 @@
 package entity.effect.base;
 
-import boundary.GameUI;
+import boundary.UserInterface;
 import entity.combatant.Combatant;
 import entity.interfaces.Named;
 import entity.interfaces.Observer;
@@ -14,8 +14,8 @@ public abstract class StatusEffect extends Observer implements Named {
         return parts[0];
     }
 
-    public abstract void apply(Combatant target, GameUI ui);
-    public abstract void remove(Combatant target, GameUI ui);
+    public abstract void apply(Combatant target, UserInterface ui);
+    public abstract void remove(Combatant target, UserInterface ui);
     public abstract boolean isExpired();
 
     public String toString() {

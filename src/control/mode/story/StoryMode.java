@@ -1,6 +1,6 @@
 package control.mode.story;
 
-import boundary.GameUI;
+import boundary.UserInterface;
 import control.BattleEngine;
 import entity.level.Difficulty;
 import control.mode.GameMode;
@@ -33,7 +33,7 @@ public class StoryMode extends GameMode {
     }
 
     @Override
-    public void onRoundEnd(BattleEngine engine, GameUI ui) {
+    public void onRoundEnd(BattleEngine engine, UserInterface ui) {
         int level = engine.getLevelNumber();
         int totalLevels = Difficulty.values().length;
         

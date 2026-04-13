@@ -4,11 +4,9 @@ package entity.action;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import boundary.GameUI;
+import boundary.UserInterface;
 import entity.action.interfaces.Action;
 import entity.combatant.Combatant;
-import entity.combatant.enemy.Enemy;
-import entity.combatant.player.Player;
 import entity.item.Item;
 
 /**
@@ -19,14 +17,14 @@ public class ActionContext {
 
     public final Combatant actor;
     public final List<Combatant> allCombatants;
-    public final GameUI ui;
+    public final UserInterface ui;
     public Item selectedItem;
     public List<Combatant> targets;
     public Combatant curTarget;
     public Action action;
     public int damage = 0;
 
-    public ActionContext(Combatant actor, List<Combatant> allCombatants, GameUI ui) {
+    public ActionContext(Combatant actor, List<Combatant> allCombatants, UserInterface ui) {
         this.actor          = actor;
         this.allCombatants  = allCombatants;
         this.ui             = ui;
@@ -83,14 +81,9 @@ public class ActionContext {
 
     /**
      * Resolves the team of a combatant.
-     * Player → Team.PLAYER
-     * Enemy  → Team.ENEMY
      */
     public static Team teamOf(Combatant c) {
-        if (c instanceof Player) return Team.PLAYER;
-        if (c instanceof Enemy)  return Team.ENEMY;
-        throw new IllegalArgumentException(
-                "Unknown combatant type: " + c.getClass().getSimpleName());
+        return c.getTeam();
     }
 
     // ── Team enum ─────────────────────────────────────────────

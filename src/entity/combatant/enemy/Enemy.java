@@ -12,6 +12,9 @@ public class Enemy extends Combatant {
         actions.add(new EnemyBasicAttack());
     }
 
+    @Override
+    public ActionContext.Team getTeam() { return ActionContext.Team.ENEMY; }
+
     public Action chooseAction(ActionContext ctx) {
         return actions.ready(ctx).get(0);
     }
