@@ -1,4 +1,4 @@
-package control.mode;
+package control.mode.survival;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,6 +13,7 @@ import entity.combatant.enemy.Wolf;
 import entity.combatant.enemy.Dragon;
 import entity.level.Level;
 import entity.level.Spawner;
+import control.mode.LevelGenerator;
 
 public class SurvivalLevelGenerator implements LevelGenerator {
     @Override

@@ -1,4 +1,4 @@
-package control.mode;
+package control.mode.timed;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import entity.level.Difficulty;
 import entity.level.Level;
 import entity.level.DifficultySpawner;
+import control.mode.LevelGenerator;
 
 public class TimedLevelGenerator implements LevelGenerator {
     @Override

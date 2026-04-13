@@ -1,4 +1,4 @@
-package control.mode;
+package control.mode.challenge;
 
 import java.util.List;
 import boundary.GameUI;
@@ -6,6 +6,7 @@ import control.BattleEngine;
 import entity.item.Item;
 import entity.item.Potion;
 import entity.equipment.Equipment;
+import control.mode.GameMode;
 
 public class ChallengeMode extends GameMode {
     public ChallengeMode() {

@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import control.mode.ChallengeMode;
+import control.mode.challenge.ChallengeMode;
 import control.mode.GameMode;
-import control.mode.StoryMode;
-import control.mode.SurvivalMode;
-import control.mode.TimedMode;
+import control.mode.story.StoryMode;
+import control.mode.survival.SurvivalMode;
+import control.mode.timed.TimedMode;
 import entity.action.interfaces.Action;
 import entity.combatant.Combatant;
 import entity.combatant.helpers.StatField;

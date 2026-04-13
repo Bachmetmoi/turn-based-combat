@@ -1,7 +1,8 @@
-package control.mode;
+package control.mode.survival;
 
 import boundary.GameUI;
 import control.BattleEngine;
+import control.mode.GameMode;
 
 public class SurvivalMode extends GameMode {
 
@@ -23,8 +24,7 @@ public class SurvivalMode extends GameMode {
     @Override
     public void onRoundEnd(BattleEngine engine, GameUI ui) {
         if (engine.getPlayer().isAlive()) {
-            ui.displayActionResult("--- Wave " + engine.getLevelNumber() +
-                    " survived! Brace yourself — the next wave approaches... ---");
+            ui.displayActionResult("--- Wave survived! Brace yourself — the next wave approaches... ---");
         }
     }
 }

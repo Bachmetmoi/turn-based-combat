@@ -1,8 +1,9 @@
-package control.mode;
+package control.mode.story;
 
 import boundary.GameUI;
 import control.BattleEngine;
 import entity.level.Difficulty;
+import control.mode.GameMode;
 
 public class StoryMode extends GameMode {
 

@@ -1,7 +1,8 @@
-package control.mode;
+package control.mode.timed;
 
 import boundary.GameUI;
 import control.BattleEngine;
+import control.mode.GameMode;
 
 public class TimedMode extends GameMode {
 
