@@ -1,66 +1,33 @@
 package entity.level;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-import entity.combatant.enemy.Dragon;
 import entity.combatant.enemy.Enemy;
-import entity.combatant.enemy.Goblin;
-import entity.combatant.enemy.Wolf;
 
 public class Level {
-    private final Difficulty difficulty;
-    private final List<Enemy> initialSpawn;
-    private List<Enemy> backupSpawn;
-    private boolean backupTriggered = false;
+    private final Iterator<List<Enemy>> waveIterator;
 
-    public Level(Difficulty difficulty) {
-        this.difficulty = difficulty;
-        this.initialSpawn = buildInitial();
-        this.backupSpawn = buildBackup();
+    public Level(Spawner spawner) {
+        this.waveIterator = spawner.getWaves();
     }
 
-    private List<Enemy> buildInitial() {
-        List<Enemy> list = new ArrayList<>();
-        switch (difficulty) {
-            case EASY:
-                list.add(new Goblin()); list.add(new Goblin()); list.add(new Goblin());
-                break;
-            case MEDIUM:
-                list.add(new Goblin()); list.add(new Wolf());
-                break;
-            case HARD:
-                list.add(new Goblin()); list.add(new Goblin());
-                break;
-            case BOSS:
-                list.add(new Dragon()); list.add(new Dragon());
-                break;
+    public List<Enemy> getInitialEnemies() {
+        if (waveIterator.hasNext()) {
+            return new ArrayList<>(waveIterator.next());
         }
-        return list;
+        return new ArrayList<>();
     }
 
-    private List<Enemy> buildBackup() {
-        List<Enemy> list = new ArrayList<>();
-        switch (difficulty) {
-            case MEDIUM:
-                list.add(new Wolf()); list.add(new Wolf());
-                break;
-            case HARD:
-                list.add(new Goblin()); list.add(new Wolf()); list.add(new Wolf());
-                break;
-            default: break;
+    public boolean isNextWaveAvailable() {
+        return waveIterator.hasNext();
+    }
+
+    public List<Enemy> getNextWave() {
+        if (waveIterator.hasNext()) {
+            return new ArrayList<>(waveIterator.next());
         }
-        return list;
-    }
-
-    public List<Enemy> getInitialEnemies() { return new ArrayList<>(initialSpawn); }
-
-    public boolean isBackupAvailable() {
-        return !backupTriggered && !backupSpawn.isEmpty();
-    }
-
-    public List<Enemy> triggerBackup() {
-        backupTriggered = true;
-        return new ArrayList<>(backupSpawn);
+        return new ArrayList<>();
     }
 }

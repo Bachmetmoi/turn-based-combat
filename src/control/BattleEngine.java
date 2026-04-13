@@ -41,10 +41,10 @@ public class BattleEngine {
         while (true) {
             currentRound++;
 
-            if (getLivingEnemies().isEmpty() && level.isBackupAvailable()) {
-                List<Enemy> backup = level.triggerBackup();
+            if (getLivingEnemies().isEmpty() && level.isNextWaveAvailable()) {
+                List<Enemy> backup = level.getNextWave();
                 allCombatants.addAll(backup);
-                ui.displayActionResult("--- BACKUP SPAWN! " + backup.stream()
+                ui.displayActionResult("--- NEXT WAVE SPAWN! " + backup.stream()
                         .map(Enemy::getName).collect(Collectors.joining(", ")) + " enter the arena! ---");
             }
 
@@ -73,7 +73,7 @@ public class BattleEngine {
 
     public boolean isBattleOver() {
         if (!player.isAlive()) return true;
-        if (getLivingEnemies().isEmpty() && !level.isBackupAvailable()) return true;
+        if (getLivingEnemies().isEmpty() && !level.isNextWaveAvailable()) return true;
         return false;
     }
 

@@ -2,10 +2,15 @@ C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\App.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\boundary\GameUI.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\control\BattleEngine.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\control\GameManager.java
+C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\control\mode\ChallengeLevelGenerator.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\control\mode\ChallengeMode.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\control\mode\GameMode.java
+C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\control\mode\LevelGenerator.java
+C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\control\mode\StoryLevelGenerator.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\control\mode\StoryMode.java
+C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\control\mode\SurvivalLevelGenerator.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\control\mode\SurvivalMode.java
+C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\control\mode\TimedLevelGenerator.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\control\mode\TimedMode.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\control\strategy\SpeedBasedTurnOrder.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\control\strategy\TurnOrderStrategy.java
@@ -30,6 +35,7 @@ C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\entity\combatant\Comba
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\entity\combatant\CombatEvent.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\entity\combatant\enemy\Dragon.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\entity\combatant\enemy\Enemy.java
+C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\entity\combatant\enemy\EnemyFactory.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\entity\combatant\enemy\Goblin.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\entity\combatant\enemy\Wolf.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\entity\combatant\helpers\ActionMenu.java
@@ -73,6 +79,7 @@ C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\entity\item\Potion.jav
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\entity\item\PowerStone.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\entity\item\SmokeBomb.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\entity\level\Difficulty.java
+C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\entity\level\DifficultySpawner.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\entity\level\Level.java
-C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\tests\CombatantStatusEffectsTest.java
-C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\tests\TestEffect.java
+C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\entity\level\LevelBuilder.java
+C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\entity\level\Spawner.java

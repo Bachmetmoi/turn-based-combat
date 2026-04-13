@@ -2,23 +2,21 @@ package control.mode;
 
 import boundary.GameUI;
 import control.BattleEngine;
-import entity.level.Difficulty;
-import entity.level.Level;
 
 public class TimedMode extends GameMode {
 
     private static final int ROUND_LIMIT = 10;
-
     private int enemiesKilled = 0;
+
+    public TimedMode() {
+        super(new TimedLevelGenerator());
+    }
 
     @Override
     public String getName() { return "Timed Mode"; }
 
     @Override
-    public Level getNextLevel(int roundNumber) {
-        if (roundNumber == 1) return new Level(Difficulty.MEDIUM);
-        return null; // only one level in timed mode
-    }
+    public String getDescription() { return "10-round limit, score by enemies killed"; }
 
     @Override
     public boolean isBattleOver(BattleEngine engine) {

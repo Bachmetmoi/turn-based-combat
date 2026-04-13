@@ -1,6 +1,7 @@
 package control;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import boundary.GameUI;
@@ -32,29 +33,10 @@ public class GameManager {
         while (true) {
             if (!replayWithSame) {
                 mode = ui.selectGameMode();
-
-                if (mode.allowClassSelection()) {
-                    playerType = ui.selectPlayerType();
-                } else {
-                    playerType = 1;
-                    ui.displayActionResult("Challenge Mode: Warrior selected as fixed class.");
-                }
-
-                if (mode.allowItemSelection()) {
-                    itemChoices = ui.selectItems();
-                } else {
-                    itemChoices = List.of(new Potion(), new Potion());
-                    ui.displayActionResult("Challenge Mode: 2x Potion assigned as fixed items.");
-                }
-
-                if (mode.allowEquipmentSelection()) {
-                    weaponChoice = ui.selectWeapon();
-                    artifactChoice = ui.selectArtifact();
-                } else {
-                    weaponChoice = null;
-                    artifactChoice = null;
-                    ui.displayActionResult("Challenge Mode: no equipment selected.");
-                }
+                playerType = mode.selectPlayerType(ui);
+                itemChoices = mode.selectItems(ui);
+                weaponChoice = mode.selectWeapon(ui);
+                artifactChoice = mode.selectArtifact(ui);
             }
 
             boolean won = runMode(mode, playerType, itemChoices, weaponChoice, artifactChoice);
@@ -74,11 +56,12 @@ public class GameManager {
 
     private boolean runMode(GameMode mode, int playerType, List<Item> itemChoices,
                             Equipment weaponChoice, Equipment artifactChoice) {
+        
+        Iterator<Level> levels = mode.iterator();
         int levelNumber = 1;
 
-        while (true) {
-            Level level = mode.getNextLevel(levelNumber);
-            if (level == null) return true;
+        while (levels.hasNext()) {
+            Level level = levels.next();
 
             Player player = createPlayer(playerType, cloneItems(itemChoices), weaponChoice, artifactChoice);
             BattleEngine engine = new BattleEngine(ui, new SpeedBasedTurnOrder(), level, player, levelNumber);
@@ -91,6 +74,7 @@ public class GameManager {
             }
             levelNumber++;
         }
+        return true;
     }
 
     private Player createPlayer(int type, List<Item> items, Equipment weapon, Equipment artifact) {

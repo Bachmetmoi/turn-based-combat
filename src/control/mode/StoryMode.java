@@ -3,24 +3,27 @@ package control.mode;
 import boundary.GameUI;
 import control.BattleEngine;
 import entity.level.Difficulty;
-import entity.level.Level;
 
 public class StoryMode extends GameMode {
 
-    private static final Difficulty[] STORY_LEVELS = {
-            Difficulty.EASY,
-            Difficulty.MEDIUM,
-            Difficulty.HARD
-    };
+    public StoryMode() {
+        super(new StoryLevelGenerator());
+    }
 
     @Override
     public String getName() { return "Story Mode"; }
 
     @Override
-    public Level getNextLevel(int roundNumber) {
-        int idx = roundNumber - 1;
-        if (idx >= STORY_LEVELS.length) return null;
-        return new Level(STORY_LEVELS[idx]);
+    public String getDescription() { return "Progress through all difficulties: " + getDifficultyPath(); }
+
+    private String getDifficultyPath() {
+        StringBuilder sb = new StringBuilder();
+        Difficulty[] diffs = Difficulty.values();
+        for (int i = 0; i < diffs.length; i++) {
+            sb.append(diffs[i]);
+            if (i < diffs.length - 1) sb.append(" --> ");
+        }
+        return sb.toString();
     }
 
     @Override
@@ -31,8 +34,10 @@ public class StoryMode extends GameMode {
     @Override
     public void onRoundEnd(BattleEngine engine, GameUI ui) {
         int level = engine.getLevelNumber();
+        int totalLevels = Difficulty.values().length;
+        
         if (engine.getPlayer().isAlive()) {
-            if (level < STORY_LEVELS.length) {
+            if (level < totalLevels) {
                 ui.displayActionResult("--- Chapter " + level + " cleared! Prepare for the next enemy wave... ---");
             } else {
                 ui.displayActionResult("--- All chapters conquered! You are victorious! ---");

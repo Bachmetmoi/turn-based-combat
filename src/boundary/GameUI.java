@@ -44,18 +44,21 @@ public class GameUI {
     */
 
     public GameMode selectGameMode() {
+        List<GameMode> modes = List.of(
+            new StoryMode(),
+            new SurvivalMode(),
+            new TimedMode(),
+            new ChallengeMode()
+        );
+
         System.out.println("\n--- SELECT GAME MODE ---");
-        System.out.println("1. Story Mode      -- 3-level progression (Easy --> Medium --> Hard)");
-        System.out.println("2. Survival Mode   -- Endless waves, increasing difficulty");
-        System.out.println("3. Timed Mode      -- 10-round limit, score by enemies killed");
-        System.out.println("4. Challenge Mode  -- Fixed loadout (Warrior + 2 Potions), Boss battle");
-        int pick = readChoice(1, 4);
-        switch (pick) {
-            case 1:  return new StoryMode();
-            case 2:  return new SurvivalMode();
-            case 3:  return new TimedMode();
-            default: return new ChallengeMode();
+        for (int i = 0; i < modes.size(); i++) {
+            GameMode mode = modes.get(i);
+            System.out.printf("%d. %-15s -- %s%n", i + 1, mode.getName(), mode.getDescription());
         }
+
+        int pick = readChoice(1, modes.size());
+        return modes.get(pick - 1);
     }
 
     public void displayModeEnd(boolean playerWon, GameMode mode) {

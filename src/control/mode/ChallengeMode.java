@@ -1,32 +1,43 @@
 package control.mode;
 
+import java.util.List;
 import boundary.GameUI;
 import control.BattleEngine;
-import entity.level.Difficulty;
-import entity.level.Level;
+import entity.item.Item;
+import entity.item.Potion;
+import entity.equipment.Equipment;
 
 public class ChallengeMode extends GameMode {
+    public ChallengeMode() {
+        super(new ChallengeLevelGenerator());
+    }
+
     @Override
     public String getName() { return "Challenge Mode"; }
 
     @Override
-    public boolean allowClassSelection() {
-        return false;
+    public String getDescription() { return "Fixed loadout (Warrior + 2 Potions), Boss battle"; }
+
+    @Override
+    public int selectPlayerType(GameUI ui) {
+        ui.displayActionResult("Challenge Mode: Warrior selected as fixed class.");
+        return 1;
     }
 
     @Override
-    public boolean allowItemSelection() {
-        return false;
+    public List<Item> selectItems(GameUI ui) {
+        ui.displayActionResult("Challenge Mode: 2x Potion assigned as fixed items.");
+        return List.of(new Potion(), new Potion());
     }
 
     @Override
-    public boolean allowEquipmentSelection() {
-        return false;
+    public Equipment selectWeapon(GameUI ui) {
+        ui.displayActionResult("Challenge Mode: no equipment selected.");
+        return null;
     }
 
     @Override
-    public Level getNextLevel(int roundNumber) {
-        if (roundNumber == 1) return new Level(Difficulty.BOSS);
+    public Equipment selectArtifact(GameUI ui) {
         return null;
     }
 
