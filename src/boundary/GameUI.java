@@ -5,10 +5,11 @@ import java.util.List;
 
 import boundary.input.ConsoleInputHandler;
 import boundary.input.InputHandler;
-import boundary.output.ColorPalette;
 import boundary.output.CombatantRenderer;
-import boundary.output.DefaultColorPalette;
-import boundary.output.OutputFormatter;
+import boundary.output.OutputBuilder;
+import boundary.output.colours.ClassicColourPalette;
+import boundary.output.colours.ColourPalette;
+import boundary.output.colours.ColourPaletteRegistry;
 import control.Registry;
 import control.mode.GameMode;
 import control.mode.challenge.ChallengeMode;
@@ -27,87 +28,141 @@ import entity.level.Difficulty;
 
 public class GameUI implements UserInterface {
 
-    private final InputHandler inputHandler;
-    private final OutputFormatter formatter;
-    private final CombatantRenderer combatantRenderer;
+    private InputHandler inputHandler;
+    private OutputBuilder builder;
+    private CombatantRenderer combatantRenderer;
 
     public GameUI() {
-        ColorPalette palette = new DefaultColorPalette();
-        this.formatter = new OutputFormatter(palette);
-        this.inputHandler = new ConsoleInputHandler(formatter.color("> ", palette.bold() + palette.primary()));
-        this.combatantRenderer = new CombatantRenderer(formatter);
+        initialize(new ClassicColourPalette());
     }
 
     // Constructor for dependency injection
-    public GameUI(InputHandler inputHandler, OutputFormatter formatter, CombatantRenderer combatantRenderer) {
+    public GameUI(InputHandler inputHandler, OutputBuilder builder, CombatantRenderer combatantRenderer) {
         this.inputHandler = inputHandler;
-        this.formatter = formatter;
+        this.builder = builder;
         this.combatantRenderer = combatantRenderer;
     }
 
-    private ColorPalette palette() { return formatter.getPalette(); }
+    private void initialize(ColourPalette palette) {
+        this.builder = new OutputBuilder(palette);
+        this.inputHandler = new ConsoleInputHandler("> ", palette);
+        this.combatantRenderer = new CombatantRenderer(builder);
+    }
+
+    private ColourPalette palette() { return builder.getPalette(); }
 
     @Override
     public void displayWelcome() {
-        System.out.println();
-        formatter.builder()
+        builder.newLine()
             .divider()
-            .append("████████╗██╗   ██╗██████╗ ███╗   ██╗    ██████╗  █████╗ ███████╗███████╗██████╗ ", palette().primary()).newLine()
-            .append("╚══██╔══╝██║   ██║██╔══██╗████╗  ██║    ██╔══██╗██╔══██╗██╔════╝██╔════╝██╔══██╗", palette().primary()).newLine()
-            .append("   ██║   ██║   ██║██████╔╝██╔██╗ ██║    ██████╔╝███████║███████╗█████╗  ██║  ██║", palette().primary()).newLine()
-            .append("   ██║   ██║   ██║██╔══██╗██║╚██╗██║    ██╔══██╗██╔══██║╚════██║██╔══╝  ██║  ██║", palette().primary()).newLine()
-            .append("   ██║   ╚██████╔╝██║  ██║██║ ╚████║    ██████╔╝██║  ██║███████║███████╗██████╔╝", palette().primary()).newLine()
-            .append("   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝ ", palette().primary()).newLine()
-            .append("        ██████╗ ██████╗ ███╗   ███╗██████╗  █████╗ ████████╗", palette().accent()).newLine()
-            .append("       ██╔════╝██╔═══██╗████╗ ████║██╔══██╗██╔══██╗╚══██╔══╝", palette().accent()).newLine()
-            .append("       ██║     ██║   ██║██╔████╔██║██████╔╝███████║   ██║   ", palette().accent()).newLine()
-            .append("       ██║     ██║   ██║██║╚██╔╝██║██╔══██╗██╔══██║   ██║   ", palette().accent()).newLine()
-            .append("       ╚██████╗╚██████╔╝██║ ╚═╝ ██║██████╔╝██║  ██║   ██║   ", palette().accent()).newLine()
-            .append("        ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═════╝ ╚═╝  ╚═╝   ╚═╝   ", palette().accent()).newLine()
+            .setColour(palette().primary())
+            .appendLine("████████╗██╗   ██╗██████╗ ███╗   ██╗    ██████╗  █████╗ ███████╗███████╗██████╗ ")
+            .appendLine("╚══██╔══╝██║   ██║██╔══██╗████╗  ██║    ██╔══██╗██╔══██╗██╔════╝██╔════╝██╔══██╗")
+            .appendLine("   ██║   ██║   ██║██████╔╝██╔██╗ ██║    ██████╔╝███████║███████╗█████╗  ██║  ██║")
+            .appendLine("   ██║   ██║   ██║██╔══██╗██║╚██╗██║    ██╔══██╗██╔══██║╚════██║██╔══╝  ██║  ██║")
+            .appendLine("   ██║   ╚██████╔╝██║  ██║██║ ╚████║    ██████╔╝██║  ██║███████║███████╗██████╔╝")
+            .appendLine("   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝ ")
+            .setColour(palette().accent())
+            .appendLine("        ██████╗ ██████╗ ███╗   ███╗██████╗  █████╗ ████████╗")
+            .appendLine("       ██╔════╝██╔═══██╗████╗ ████║██╔══██╗██╔══██╗╚══██╔══╝")
+            .appendLine("       ██║     ██║   ██║██╔████╔██║██████╔╝███████║   ██║   ")
+            .appendLine("       ██║     ██║   ██║██║╚██╔╝██║██╔══██╗██╔══██║   ██║   ")
+            .appendLine("       ╚██████╗╚██████╔╝██║ ╚═╝ ██║██████╔╝██║  ██║   ██║   ")
+            .appendLine("        ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═════╝ ╚═╝  ╚═╝   ╚═╝   ")
             .divider()
-            .append("                 Enter the arena. Survive the fight.", palette().neutral()).newLine()
+            .appendLine("                 Enter the arena. Survive the fight.", palette().neutral())
             .divider()
             .print();
     }
 
     @Override
     public GameMode selectGameMode() {
-        return selectGameMode(List.of(
+        List<GameMode> modes = List.of(
                 new StoryMode(),
                 new SurvivalMode(),
                 new TimedMode(),
                 new ChallengeMode()
-        ));
+        );
+
+        while (true) {
+            builder.newLine()
+                .sectionTitle("MAIN MENU", palette().primary())
+                .softDivider()
+                .print();
+
+            for (int i = 0; i < modes.size(); i++) {
+                GameMode mode = modes.get(i);
+                builder.append((i + 1) + ". ", palette().primary())
+                       .append(String.format("%-16s", mode.getName()), palette().secondary())
+                       .append("  ")
+                       .appendLine(mode.getDescription(), palette().neutral());
+            }
+
+            builder.append((modes.size() + 1) + ". ", palette().primary())
+                   .append(String.format("%-16s", "Settings"), palette().accent())
+                   .appendLine("Change theme and other options.", palette().neutral())
+                   .print();
+
+            builder.softDivider().print();
+            int pick = inputHandler.readChoice(1, modes.size() + 1);
+
+            if (pick <= modes.size()) {
+                return modes.get(pick - 1);
+            } else {
+                displaySettings();
+            }
+        }
     }
 
-    public GameMode selectGameMode(List<GameMode> modes) {
-        System.out.println();
-        formatter.printSectionTitle("GAME MODES", palette().primary());
-        formatter.printSoftDivider();
+    private void displaySettings() {
+        while (true) {
+            builder.newLine()
+                .sectionTitle("SETTINGS", palette().primary())
+                .softDivider()
+                .append("1.", palette().primary()).appendLine(" Change Theme", palette().secondary())
+                .append("2.", palette().primary()).appendLine(" Back to Main Menu", palette().secondary())
+                .softDivider()
+                .print();
 
-        for (int i = 0; i < modes.size(); i++) {
-            GameMode mode = modes.get(i);
-            System.out.printf("%s %s  %s%n",
-                    formatter.color((i + 1) + ".", palette().primary()),
-                    formatter.color(String.format("%-16s", mode.getName()), palette().secondary()),
-                    formatter.color(mode.getDescription(), palette().neutral()));
+            int choice = inputHandler.readChoice(1, 2);
+            if (choice == 1) {
+                changeTheme();
+            } else {
+                break;
+            }
         }
+    }
 
-        formatter.printSoftDivider();
-        int pick = inputHandler.readChoice(1, modes.size());
-        return modes.get(pick - 1);
+    private void changeTheme() {
+        ColourPaletteRegistry registry = ColourPaletteRegistry.getInstance();
+        Class<? extends ColourPalette> paletteClass = selectFromRegistry(registry, "SELECT THEME");
+        try {
+            initialize(paletteClass.getDeclaredConstructor().newInstance());
+            builder.newLine()
+                .appendLine("Theme applied successfully!", palette().success())
+                .print();
+        } catch (Exception e) {
+            builder.newLine()
+                .appendLine("Failed to apply theme.", palette().danger())
+                .print();
+        }
     }
 
     @Override
     public void displayModeEnd(boolean playerWon, GameMode mode) {
-        System.out.println();
-        formatter.printDivider();
-        System.out.println(formatter.color("MODE", palette().primary()) + "  " + formatter.color(mode.getName().toUpperCase(), palette().bold() + palette().neutral()));
-        System.out.println(formatter.color("RESULT", palette().primary()) + "  "
-                + (playerWon
-                ? formatter.color("VICTORY", palette().bold() + palette().success())
-                : formatter.color("DEFEATED", palette().bold() + palette().danger())));
-        formatter.printDivider();
+        builder.newLine()
+            .divider()
+            .append("MODE", palette().primary())
+            .appendLine("  " + mode.getName().toUpperCase(), palette().bold() + palette().neutral())
+            .append("RESULT", palette().primary());
+
+        if (playerWon) {
+            builder.appendLine("  " + "VICTORY", palette().bold() + palette().success());
+        } else {
+            builder.appendLine("  " + "DEFEATED", palette().bold() + palette().danger());
+        }
+        builder.divider()
+            .print();
     }
 
     @Override
@@ -125,7 +180,7 @@ public class GameUI implements UserInterface {
         List<Class<? extends T>> chosen = new ArrayList<>();
 
         for (int i = 1; i <= count; i++) {
-            System.out.print(formatter.color("Choice " + i + ": ", palette().primary()));
+            builder.append("Choice " + i + ": ", palette().primary()).print();
             int pick = inputHandler.readChoice(1, registry.getNames().size());
             chosen.add(registry.getType(pick - 1));
         }
@@ -137,24 +192,28 @@ public class GameUI implements UserInterface {
         List<String> names = registry.getNames();
         List<Registry.Entry<T>> entries = registry.getEntries();
 
-        System.out.println();
-        formatter.printSectionTitle(title.toUpperCase(), palette().primary());
-        formatter.printSoftDivider();
+        builder.newLine()
+            .sectionTitle(title.toUpperCase(), palette().primary())
+            .softDivider()
+            .print();
 
         for (int i = 0; i < entries.size(); i++) {
-            System.out.printf("%s %s%n",
-                    formatter.color((i + 1) + ".", palette().primary()),
-                    formatter.color(names.get(i), palette().secondary()) + "  " + formatter.color(entries.get(i).description, palette().neutral()));
+            builder.append((i + 1) + ". ", palette().primary())
+                   .append(names.get(i), palette().secondary())
+                   .append("  ")
+                   .appendLine(entries.get(i).description, palette().neutral());
         }
+        builder.print();
 
-        formatter.printSoftDivider();
+        builder.softDivider().print();
     }
 
     @Override
     public Difficulty selectDifficulty() {
-        System.out.println();
-        formatter.printSectionTitle("DIFFICULTY", palette().primary());
-        formatter.printSoftDivider();
+        builder.newLine()
+            .sectionTitle("DIFFICULTY", palette().primary())
+            .softDivider()
+            .print();
 
         Difficulty[] diffs = Difficulty.values();
         for (int i = 0; i < diffs.length; i++) {
@@ -167,22 +226,23 @@ public class GameUI implements UserInterface {
                 difficultyColor = palette().danger();
             }
 
-            System.out.printf("%s %s%n",
-                    formatter.color((i + 1) + ".", palette().primary()),
-                    formatter.color(d, difficultyColor));
+            builder.append((i + 1) + ". ", palette().primary())
+                   .appendLine(d, difficultyColor);
         }
+        builder.print();
 
-        formatter.printSoftDivider();
+        builder.softDivider().print();
         int pick = inputHandler.readChoice(1, diffs.length);
         return diffs[pick - 1];
     }
 
     @Override
     public void displayRoundStart(int round, List<Combatant> combatants) {
-        System.out.println();
-        formatter.printDivider();
-        System.out.println(formatter.color("ROUND " + round, palette().bold() + palette().accent()));
-        formatter.printDivider();
+        builder.newLine()
+            .divider()
+            .bold("ROUND " + round, palette().accent()).newLine()
+            .divider()
+            .print();
 
         List<Combatant> players = new ArrayList<>();
         List<Combatant> enemies = new ArrayList<>();
@@ -198,57 +258,59 @@ public class GameUI implements UserInterface {
         }
 
         if (!players.isEmpty()) {
-            formatter.printSectionTitle("ALLIES", palette().player());
+            builder.sectionTitle("ALLIES", palette().player()).print();
             for (Combatant c : players) {
                 combatantRenderer.printCombatantCard(c, 0, false);
             }
         }
 
         if (!players.isEmpty() && !enemies.isEmpty()) {
-            formatter.printSoftDivider();
+            builder.softDivider().print();
         }
 
         if (!enemies.isEmpty()) {
-            formatter.printSectionTitle("ENEMIES", palette().enemy());
+            builder.sectionTitle("ENEMIES", palette().enemy()).print();
             for (Combatant c : enemies) {
                 combatantRenderer.printCombatantCard(c, 0, false);
             }
         }
 
-        formatter.printDivider();
+        builder.divider().print();
     }
 
     @Override
     public Combatant selectTarget(List<Combatant> combatants) {
-        System.out.println();
-        formatter.printSectionTitle("SELECT TARGET", palette().primary());
-        formatter.printSoftDivider();
+        builder.newLine()
+            .sectionTitle("SELECT TARGET", palette().primary())
+            .softDivider()
+            .print();
 
         for (int i = 0; i < combatants.size(); i++) {
             combatantRenderer.printCombatantCard(combatants.get(i), i + 1, true);
             if (i < combatants.size() - 1) {
-                System.out.println();
+                builder.newLine().print();
             }
         }
 
-        formatter.printSoftDivider();
+        builder.softDivider().print();
         int idx = inputHandler.readChoice(1, combatants.size()) - 1;
         return combatants.get(idx);
     }
 
     @Override
     public Item selectItem(List<Item> items) {
-        System.out.println();
-        formatter.printSectionTitle("SELECT ITEM", palette().primary());
-        formatter.printSoftDivider();
+        builder.newLine()
+            .sectionTitle("SELECT ITEM", palette().primary())
+            .softDivider()
+            .print();
 
         for (int i = 0; i < items.size(); i++) {
-            System.out.printf("%s %s%n",
-                    formatter.color((i + 1) + ".", palette().primary()),
-                    formatter.color(items.get(i).getName(), palette().secondary()));
+            builder.append((i + 1) + ". ", palette().primary())
+                   .appendLine(items.get(i).getName(), palette().secondary());
         }
+        builder.print();
 
-        formatter.printSoftDivider();
+        builder.softDivider().print();
         return items.get(inputHandler.readChoice(1, items.size()) - 1);
     }
 
@@ -271,38 +333,46 @@ public class GameUI implements UserInterface {
             chosenColor = palette().warning();
         }
 
-        System.out.println(formatter.color(">> " + msg, chosenColor));
+        builder.appendLine(">> " + msg, chosenColor).print();
     }
 
     @Override
     public void displayBattleEnd(boolean playerWon, Player player, int rounds) {
-        System.out.println();
-        formatter.printDivider();
-
+        builder.setColour(palette().primary()).newLine().divider();
+        
         if (playerWon) {
-            System.out.println(formatter.color("BATTLE RESULT", palette().primary()) + "  " + formatter.color("VICTORY", palette().bold() + palette().success()));
-            System.out.println(formatter.color("You defeated all enemies.", palette().success()));
-            System.out.println(formatter.color("Final HP", palette().primary()) + "  "
-                    + formatter.color(player.getHp() + "/" + player.stats().get(StatField.maxHp), palette().success()));
-            System.out.println(formatter.color("Rounds", palette().primary()) + "    " + formatter.color(String.valueOf(rounds), palette().accent()));
+            builder
+                .append("BATTLE RESULT")
+                .appendLine("  " + "VICTORY", palette().bold() + palette().success())
+                .appendLine("You defeated all enemies.", palette().success())
+                .append("Final HP")
+                .appendLine("  " + player.getHp() + "/" + player.stats().get(StatField.maxHp), palette().success())
+                .append("Rounds", palette().primary())
+                .appendLine("    " + String.valueOf(rounds), palette().accent());
         } else {
-            System.out.println(formatter.color("BATTLE RESULT", palette().primary()) + "  " + formatter.color("DEFEATED", palette().bold() + palette().danger()));
-            System.out.println(formatter.color("The enemy team has won this battle.", palette().danger()));
-            System.out.println(formatter.color("Rounds", palette().primary()) + "    " + formatter.color(String.valueOf(rounds), palette().accent()));
+            builder
+                .append("BATTLE RESULT")
+                .appendLine("  " + "DEFEATED", palette().bold() + palette().danger())
+                .appendLine("The enemy team has won this battle.", palette().danger())
+                .append("Rounds")
+                .appendLine("    " + String.valueOf(rounds), palette().accent());
         }
 
-        formatter.printDivider();
+        builder.divider().print();
     }
 
     @Override
     public int askReplay() {
-        System.out.println();
-        formatter.printSectionTitle("NEXT STEP", palette().primary());
-        formatter.printSoftDivider();
-        System.out.println(formatter.color("1.", palette().primary()) + " " + formatter.color("Replay with same settings", palette().neutral()));
-        System.out.println(formatter.color("2.", palette().primary()) + " " + formatter.color("Start a new game", palette().neutral()));
-        System.out.println(formatter.color("3.", palette().primary()) + " " + formatter.color("Exit", palette().neutral()));
-        formatter.printSoftDivider();
+        builder
+            .setColour(palette().primary())
+            .newLine()
+            .sectionTitle("NEXT STEP", palette().primary())
+            .softDivider()
+            .append("1.").appendLine(" Replay with same settings", palette().neutral())
+            .append("2.").appendLine(" Start a new game", palette().neutral())
+            .append("3.").appendLine(" Exit", palette().neutral())
+            .softDivider()
+            .print();
         return inputHandler.readChoice(1, 3);
     }
 
@@ -311,27 +381,28 @@ public class GameUI implements UserInterface {
                                List<Action> readyActions,
                                Combatant owner) {
 
-        System.out.println();
-        formatter.printSectionTitle("TURN", palette().primary());
-        System.out.println(formatter.color(combatantRenderer.iconFor(owner) + " " + owner.getName(), palette().bold() + combatantRenderer.colorFor(owner)));
-        formatter.printSoftDivider();
+        builder.newLine()
+            .sectionTitle("TURN", palette().primary())
+            .append(combatantRenderer.iconFor(owner) + " ", combatantRenderer.colorFor(owner))
+            .bold(owner.getName(), combatantRenderer.colorFor(owner)).newLine()
+            .softDivider()
+            .print();
 
         for (int i = 0; i < allActions.size(); i++) {
             Action action = allActions.get(i);
             boolean ready = readyActions.contains(action);
 
             if (ready) {
-                System.out.printf("%s %s%n",
-                        formatter.color((i + 1) + ".", palette().primary()),
-                        formatter.color(action.getLabel(), palette().secondary()));
+                builder.append((i + 1) + ". ", palette().primary())
+                       .appendLine(action.getLabel(), palette().secondary());
             } else {
-                System.out.printf("%s %s%n",
-                        formatter.color((i + 1) + ".", palette().primary()),
-                        formatter.color(action.getLabel() + " [UNAVAILABLE]", palette().danger()));
+                builder.append((i + 1) + ". ", palette().primary())
+                       .appendLine(action.getLabel() + " [UNAVAILABLE]", palette().danger());
             }
         }
+        builder.print();
 
-        formatter.printSoftDivider();
+        builder.softDivider().print();
 
         while (true) {
             int input = inputHandler.readChoice(1, allActions.size());
@@ -339,7 +410,9 @@ public class GameUI implements UserInterface {
             if (readyActions.contains(chosen)) {
                 return chosen;
             }
-            System.out.println(formatter.color("Invalid choice. Please select a ready action.", palette().danger()));
+            builder.appendLine("Invalid choice. Please select a ready action.", palette().danger()).print();
         }
     }
 }
+
+

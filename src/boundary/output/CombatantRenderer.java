@@ -1,18 +1,19 @@
 package boundary.output;
 
+import boundary.output.colours.ColourPalette;
 import entity.action.ActionContext;
 import entity.combatant.Combatant;
 import entity.combatant.helpers.StatField;
 
 public class CombatantRenderer {
-    private final OutputFormatter formatter;
+    private final OutputBuilder builder;
     private static final int BAR_LENGTH = 18;
 
-    public CombatantRenderer(OutputFormatter formatter) {
-        this.formatter = formatter;
+    public CombatantRenderer(OutputBuilder builder) {
+        this.builder = builder;
     }
 
-    private ColorPalette palette() { return formatter.getPalette(); }
+    private ColourPalette palette() { return builder.getPalette(); }
 
     public String iconFor(Combatant c) {
         String name = c.getName().toLowerCase();
@@ -45,13 +46,13 @@ public class CombatantRenderer {
         return palette().danger();
     }
 
-    public String healthBar(int hp, int maxHp) {
+    private void appendHealthBar(int hp, int maxHp) {
         if (maxHp <= 0) maxHp = 1;
         int filled = (int) Math.round((hp * 1.0 / maxHp) * BAR_LENGTH);
         filled = Math.max(0, Math.min(BAR_LENGTH, filled));
-        String filledPart = formatter.color(formatter.repeat("█", filled), barFillColor(hp, maxHp));
-        String emptyPart = formatter.color(formatter.repeat("░", BAR_LENGTH - filled), palette().softDivider());
-        return filledPart + emptyPart;
+        builder
+            .repeat("█", filled, barFillColor(hp, maxHp))
+            .repeat("░", BAR_LENGTH - filled, palette().softDivider());
     }
 
     public String safeStatusText(Combatant c) {
@@ -70,27 +71,37 @@ public class CombatantRenderer {
 
     public void printCombatantCard(Combatant c, int index, boolean showIndex) {
         int maxHp = c.stats().get(StatField.maxHp);
-        String indexText = showIndex ? formatter.color(index + ". ", palette().primary()) : "   ";
-        String sideTag = (c.getTeam() == ActionContext.Team.PLAYER)
-                ? formatter.color("[ALLY]", palette().player())
-                : formatter.color("[ENEMY]", palette().enemy());
+        String status = safeStatusText(c);
 
-        String line1 = indexText
-                + formatter.color(iconFor(c), colorFor(c))
-                + " "
-                + formatter.color(c.getName(), palette().bold() + colorFor(c))
-                + " "
-                + sideTag
-                + "  "
-                + formatter.color(safeStatusText(c), statusColor(safeStatusText(c)));
+        // Header Line
+        if (showIndex) {
+            builder.append(index + ". ", palette().primary());
+        } else {
+            builder.append("   ");
+        }
 
-        String line2 = "    "
-                + formatter.color("HP ", palette().neutral())
-                + formatter.color(String.format("%d/%d", c.getHp(), maxHp), hpColor(c.getHp(), maxHp))
-                + "  "
-                + healthBar(c.getHp(), maxHp);
+        builder.append(iconFor(c), colorFor(c))
+                .append(" ")
+                .bold(c.getName(), colorFor(c))
+                .append(" ");
 
-        System.out.println(line1);
-        System.out.println(line2);
+        if (c.getTeam() == ActionContext.Team.PLAYER) {
+            builder.append("[ALLY]", palette().player());
+        } else {
+            builder.append("[ENEMY]", palette().enemy());
+        }
+
+        builder.append("  ")
+                .appendLine(status, statusColor(status));
+
+        // Stats Line
+        builder.append("    ")
+                .append("HP ", palette().neutral())
+                .append(String.format("%d/%d", c.getHp(), maxHp), hpColor(c.getHp(), maxHp))
+                .append("  ");
+        
+        appendHealthBar(c.getHp(), maxHp);
+        
+        builder.println();
     }
 }

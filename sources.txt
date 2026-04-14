@@ -3,11 +3,14 @@ C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\boundary\GameUI.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\boundary\UserInterface.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\boundary\input\ConsoleInputHandler.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\boundary\input\InputHandler.java
-C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\boundary\output\ColorPalette.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\boundary\output\CombatantRenderer.java
-C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\boundary\output\DefaultColorPalette.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\boundary\output\OutputBuilder.java
-C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\boundary\output\OutputFormatter.java
+C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\boundary\output\colours\ClassicColourPalette.java
+C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\boundary\output\colours\ColourPalette.java
+C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\boundary\output\colours\ColourPaletteRegistry.java
+C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\boundary\output\colours\CyberpunkColourPalette.java
+C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\boundary\output\colours\MidnightColourPalette.java
+C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\boundary\output\colours\SolarizedColourPalette.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\control\BattleEngine.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\control\GameManager.java
 C:\Users\chowy\Documents\ntu\SC2002\turn_based_combat\src\control\Registry.java

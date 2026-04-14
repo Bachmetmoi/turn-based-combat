@@ -1,6 +1,9 @@
-package boundary.output;
+package boundary.output.colours;
 
-public interface ColorPalette {
+import entity.interfaces.Describable;
+import entity.interfaces.Named;
+
+public interface ColourPalette extends Named, Describable {
     String reset();
     String bold();
 

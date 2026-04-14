@@ -8,8 +8,10 @@ import java.util.Map;
 import entity.interfaces.Describable;
 import entity.interfaces.Named;
 
-public class Registry<T extends Named & Describable> {
+public abstract class Registry<T extends Named & Describable> {
     private final Map<String, Entry<T>> entries = new LinkedHashMap<>();
+
+    protected Registry() {}
 
     public static class Entry<T> {
         public final String description;
