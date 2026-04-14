@@ -12,4 +12,18 @@ public class Warrior extends Player {
 
     @Override
     public String getDescription() { return "High HP and defense, but low speed."; }
+
+    @Override
+    public String[] getArt() {
+        return new String[]{ 
+            " _   _   _   _+       |",
+            "/_`-'_`-'_`-'_|  \\+/  |",
+            "\\_` '_` '_` '_| _<=>_ |",
+            "  `-' `-' `-' 0/ \\ / o=o",
+            "              \\/\\ ^ /`0",
+            "              | /_^_\\",
+            "              | || ||",
+            "            __|_d|_|b__"
+        };
+    }
 }

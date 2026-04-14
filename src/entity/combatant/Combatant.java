@@ -1,5 +1,6 @@
 package entity.combatant;
 
+import boundary.output.colours.ColourPalette;
 import entity.action.ActionContext;
 import entity.action.interfaces.Action;
 import entity.combatant.helpers.ActionMenu;
@@ -29,7 +30,22 @@ public abstract class Combatant implements Named, Describable {
 
     public abstract Action chooseAction(ActionContext ctx);
 
-    public abstract String getDescription();
+    public abstract String[] getArt();
+
+    public String getColour(ColourPalette palette) {
+        return (getTeam() == ActionContext.Team.PLAYER) ? palette.player() : palette.enemy();
+    }
+
+    public String getStatusText() {
+        if (!isAlive()) return "DEFEATED";
+        String s = status.toString();
+        return s.isEmpty() ? "NORMAL" : s.toUpperCase();
+    }
+
+    public String getStatusColour(ColourPalette palette) {
+        if (!isAlive()) return palette.danger();
+        return status.getMostSevereColour(palette);
+    }
 
     public void takeTurn(ActionContext ctx) {
         if (status.trigger(CombatEvent.TURN_START, ctx)) {

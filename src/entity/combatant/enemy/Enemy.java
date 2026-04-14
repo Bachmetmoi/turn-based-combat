@@ -19,6 +19,16 @@ public class Enemy extends Combatant {
     @Override
     public String getDescription() { return "A standard enemy."; }
 
+    @Override
+    public String[] getArt() {
+        return new String[]{
+                "    O        ",
+                "   /|\\       ",
+                "   / \\       ",
+                "             "
+        };
+    }
+
     public Action chooseAction(ActionContext ctx) {
         return actions.ready(ctx).get(0);
     }

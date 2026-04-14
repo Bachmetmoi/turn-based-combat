@@ -1,6 +1,7 @@
 package entity.effect;
 
 import boundary.UserInterface;
+import boundary.output.colours.ColourPalette;
 import entity.action.ActionContext;
 import entity.combatant.CombatEvent;
 import entity.combatant.Combatant;
@@ -15,6 +16,11 @@ public class SmokeBombEffect extends DurationEffect implements NonStackableEffec
     }
 
     public void apply(Combatant target, UserInterface ui) {}
+
+    @Override
+    public String getColour(ColourPalette palette) {
+        return palette.success();
+    }
 
     private boolean onDamageTaken(ActionContext ctx) { 
         ctx.ui.displayActionResult("0 damage (Smoke Bomb active)!");

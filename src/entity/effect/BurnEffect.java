@@ -1,6 +1,7 @@
 package entity.effect;
 
 import boundary.UserInterface;
+import boundary.output.colours.ColourPalette;
 import entity.action.ActionContext;
 import entity.combatant.CombatEvent;
 import entity.combatant.Combatant;
@@ -16,6 +17,11 @@ public class BurnEffect extends DurationEffect {
     }
 
     public void apply(Combatant target, UserInterface ui) {}
+
+    @Override
+    public String getColour(ColourPalette palette) {
+        return palette.warning();
+    }
 
     @Override
     public boolean tick(ActionContext ctx) {

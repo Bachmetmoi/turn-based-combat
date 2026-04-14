@@ -8,6 +8,7 @@ import java.util.Map;
 
 import entity.combatant.Combatant;
 import entity.effect.base.PermanentEffect;
+import entity.effect.base.StatusEffect;
 import entity.equipment.Equipment;
 import entity.equipment.EquipmentType;
 import entity.equipment.SpecialEffectEquipment;
@@ -25,7 +26,8 @@ public class EquipmentManager {
         if (equipment == null) return;
         equipped.put(equipment.type, equipment);
         if (equipment instanceof SpecialEffectEquipment) {
-            ((SpecialEffectEquipment) equipment).effect.apply(owner, null);
+            StatusEffect effect = ((SpecialEffectEquipment) equipment).effect;
+            owner.status.add(effect, null);
         }
     }
 

@@ -2,6 +2,7 @@ package entity.combatant.enemy;
 
 import java.util.List;
 
+import boundary.output.colours.ColourPalette;
 import entity.action.ActionContext;
 import entity.action.enemy.EnemyBasicAttack;
 import entity.action.enemy.FireBreath;
@@ -38,5 +39,26 @@ public class Dragon extends Enemy {
             }
         }
         return ready.get(0);
+    }
+
+    @Override
+    public String[] getArt() {
+        return new String[]{
+            "        \\****__              ____",
+            "         |    *****\\_      --/ *\\-__",
+            "         /_         (_    ./ ,/----'",
+            "           \\__         (_./  /",
+            "              \\__            \\___----^__",
+            "               _/   _                  \\",
+            "        |    _/  __/ )\\\"\\ _____         *\\",
+            "        |\\__/   /    ^ ^       \\____      )",
+            "         \\___--\"                    \\_____ )",
+            "                                          \""
+        };
+    }
+
+    @Override
+    public String getColour(ColourPalette palette) {
+        return palette.boss();
     }
 }

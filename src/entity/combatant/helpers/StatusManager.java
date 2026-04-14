@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import boundary.UserInterface;
+import boundary.output.colours.ColourPalette;
 import entity.action.ActionContext;
 import entity.combatant.CombatEvent;
 import entity.combatant.Combatant;
@@ -31,6 +32,20 @@ public class StatusManager {
 
     public StatusManager(Combatant owner) {
         this.owner = owner;
+    }
+
+    public String getMostSevereColour(ColourPalette palette) {
+        List<StatusEffect> effects = active();
+        if (effects.isEmpty()) return palette.neutral();
+        
+        // Priority: warning (like stun) > success (buffs) > neutral
+        String best = palette.neutral();
+        for (StatusEffect e : effects) {
+            String c = e.getColour(palette);
+            if (c.equals(palette.warning())) return c; // Highest priority
+            if (c.equals(palette.success())) best = c;
+        }
+        return best;
     }
 
 

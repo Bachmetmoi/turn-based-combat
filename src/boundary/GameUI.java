@@ -1,5 +1,8 @@
 package boundary;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import boundary.input.ConsoleInputHandler;
 import boundary.input.InputHandler;
 import boundary.output.CombatantRenderer;
@@ -22,8 +25,6 @@ import entity.interfaces.Describable;
 import entity.interfaces.Named;
 import entity.item.Item;
 import entity.level.Difficulty;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameUI implements UserInterface {
 
@@ -137,11 +138,13 @@ public class GameUI implements UserInterface {
         Class<? extends ColourPalette> paletteClass = selectFromRegistry(registry, "SELECT THEME");
         try {
             initialize(paletteClass.getDeclaredConstructor().newInstance());
-            builder.newLine()
+            builder
+                .newLine()
                 .appendLine("Theme applied successfully!", palette().success())
                 .print();
         } catch (Exception e) {
-            builder.newLine()
+            builder
+                .newLine()
                 .appendLine("Failed to apply theme.", palette().danger())
                 .print();
         }
@@ -149,7 +152,8 @@ public class GameUI implements UserInterface {
 
     @Override
     public void displayModeEnd(boolean playerWon, GameMode mode) {
-        builder.newLine()
+        builder
+            .newLine()
             .divider()
             .append("MODE", palette().primary())
             .appendLine("  " + mode.getName().toUpperCase(), palette().bold() + palette().neutral())
@@ -160,7 +164,8 @@ public class GameUI implements UserInterface {
         } else {
             builder.appendLine("  " + "DEFEATED", palette().bold() + palette().danger());
         }
-        builder.divider()
+        builder
+            .divider()
             .print();
     }
 
@@ -197,19 +202,19 @@ public class GameUI implements UserInterface {
             .print();
 
         for (int i = 0; i < entries.size(); i++) {
-            builder.append((i + 1) + ". ", palette().primary())
-                   .append(names.get(i), palette().secondary())
-                   .append("  ")
-                   .appendLine(entries.get(i).description, palette().neutral());
+            builder
+                .append((i + 1) + ". ", palette().primary())
+                .append(names.get(i), palette().secondary())
+                .append("  ")
+                .appendLine(entries.get(i).description, palette().neutral());
         }
-        builder.print();
-
         builder.softDivider().print();
     }
 
     @Override
     public Difficulty selectDifficulty() {
-        builder.newLine()
+        builder
+            .newLine()
             .sectionTitle("DIFFICULTY", palette().primary())
             .softDivider()
             .print();
@@ -225,11 +230,10 @@ public class GameUI implements UserInterface {
                 difficultycolour = palette().danger();
             }
 
-            builder.append((i + 1) + ". ", palette().primary())
-                   .appendLine(d, difficultycolour);
+            builder
+                .append((i + 1) + ". ", palette().primary())
+                .appendLine(d, difficultycolour);
         }
-        builder.print();
-
         builder.softDivider().print();
         int pick = inputHandler.readChoice(1, diffs.length);
         return diffs[pick - 1];
@@ -237,7 +241,8 @@ public class GameUI implements UserInterface {
 
     @Override
     public void displayRoundStart(int round, List<Combatant> combatants) {
-        builder.newLine()
+        builder
+            .newLine()
             .divider()
             .bold("ROUND " + round, palette().accent()).newLine()
             .divider()
@@ -381,7 +386,7 @@ public Action selectAction(List<Action> allActions,
 
     builder.newLine()
         .sectionTitle("TURN", palette().primary())
-        .bold(owner.getName(), combatantRenderer.colourFor(owner)).newLine()
+        .bold(owner.getName(), owner.getColour(palette())).newLine()
         .softDivider()
         .print();
 

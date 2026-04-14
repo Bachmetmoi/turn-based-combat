@@ -16,4 +16,14 @@ public class Goblin extends Enemy {
 
     @Override
     public String getDescription() { return "A small but agile creature."; }
+
+    @Override
+    public String[] getArt() {
+        return new String[]{
+                "   ,,,       ",
+                "  (o o)      ",
+                "  /|_|\\      ",
+                "   / \\       "
+        };
+    }
 }

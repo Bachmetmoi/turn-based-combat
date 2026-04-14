@@ -1,6 +1,7 @@
 package entity.effect.base;
 
 import boundary.UserInterface;
+import boundary.output.colours.ColourPalette;
 import entity.combatant.Combatant;
 import entity.combatant.helpers.StatField;
 
@@ -11,6 +12,11 @@ public class PermanentStatEffect extends PermanentEffect {
     public PermanentStatEffect(int value, StatField stat) {
         this.value = value;
         this.stat = stat;
+    }
+
+    @Override
+    public String getColour(ColourPalette palette) {
+        return value > 0 ? palette.success() : palette.warning();
     }
 
     @Override

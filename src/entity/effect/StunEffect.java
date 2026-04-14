@@ -1,6 +1,7 @@
 package entity.effect;
 
 import boundary.UserInterface;
+import boundary.output.colours.ColourPalette;
 import entity.action.ActionContext;
 import entity.combatant.CombatEvent;
 import entity.combatant.Combatant;
@@ -15,6 +16,11 @@ public class StunEffect extends DurationEffect implements NonStackableEffect {
 
     public void apply(Combatant target, UserInterface ui) { 
         ui.displayActionResult(target.getName() + " is STUNNED for " + duration + " turns!");
+    }
+
+    @Override
+    public String getColour(ColourPalette palette) {
+        return palette.warning();
     }
 
     @Override

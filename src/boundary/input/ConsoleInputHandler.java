@@ -14,7 +14,7 @@ public class ConsoleInputHandler implements InputHandler {
     public ConsoleInputHandler(String prompt, ColourPalette palette) {
         this.builder = new OutputBuilder(palette);
         this.palette = palette;
-        this.prompt = builder.append(prompt, palette.primary() + palette.bold()).toString();
+        this.prompt = builder.bold(prompt, palette.primary()).toString();
     }
 
     @Override
@@ -30,7 +30,8 @@ public class ConsoleInputHandler implements InputHandler {
             } catch (NumberFormatException ignored) {
                 builder
                     .newLine()
-                    .appendLine("Please enter a number between " + min + " and " + max + ".", palette.danger() + palette.bold())
+                    .bold("Please enter a number between " + min + " and " + max + ".", palette.danger())
+                    .newLine()
                     .print();
             }
         }

@@ -16,4 +16,14 @@ public class Wolf extends Enemy {
 
     @Override
     public String getDescription() { return "A ferocious predator with sharp fangs."; }
+
+    @Override
+    public String[] getArt() {
+        return new String[]{
+                "  /\\__/\\     ",
+                " (  o o )    ",
+                "  \\_  _/     ",
+                "    \\/       "
+        };
+    }
 }

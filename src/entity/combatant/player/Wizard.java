@@ -12,4 +12,17 @@ public class Wizard extends Player {
 
     @Override
     public String getDescription() { return "Low HP and defense, but high attack."; }
+
+    @Override
+    public String[] getArt() {
+        return new String[]{
+            "     __/\\__",
+            ". _  \\\\''//",
+            "-( )-/_||_\\",
+            " .'. \\_()_/",
+            "  |   | . \\",
+            "  |mrf| .  \\",
+            " .'. ,\\_____'."
+        };
+    }
 }

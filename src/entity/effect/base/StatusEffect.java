@@ -1,6 +1,7 @@
 package entity.effect.base;
 
 import boundary.UserInterface;
+import boundary.output.colours.ColourPalette;
 import entity.combatant.Combatant;
 import entity.interfaces.Named;
 import entity.interfaces.Observer;
@@ -14,9 +15,14 @@ public abstract class StatusEffect extends Observer implements Named {
         return parts[0];
     }
 
+    // TODO: add status effects through apply rather than accessing statusManager directly
     public abstract void apply(Combatant target, UserInterface ui);
     public abstract void remove(Combatant target, UserInterface ui);
     public abstract boolean isExpired();
+
+    public String getColour(ColourPalette palette) {
+        return palette.neutral();
+    }
 
     public String toString() {
         return "[" + getName() + "]";
