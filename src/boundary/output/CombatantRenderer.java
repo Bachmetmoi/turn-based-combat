@@ -26,12 +26,12 @@ public class CombatantRenderer {
         return "✦";
     }
 
-    public String colorFor(Combatant c) {
+    public String colourFor(Combatant c) {
         if (c.getName().toLowerCase().contains("dragon")) return palette().boss();
         return (c.getTeam() == ActionContext.Team.PLAYER) ? palette().player() : palette().enemy();
     }
 
-    public String hpColor(int hp, int maxHp) {
+    public String hpcolour(int hp, int maxHp) {
         if (maxHp <= 0) return palette().low();
         double ratio = hp * 1.0 / maxHp;
         if (ratio > 0.60) return palette().high();
@@ -39,7 +39,7 @@ public class CombatantRenderer {
         return palette().low();
     }
 
-    private String barFillColor(int hp, int maxHp) {
+    private String barFillcolour(int hp, int maxHp) {
         double ratio = hp * 1.0 / maxHp;
         if (ratio > 0.60) return palette().success();
         if (ratio > 0.30) return palette().warning();
@@ -51,7 +51,7 @@ public class CombatantRenderer {
         int filled = (int) Math.round((hp * 1.0 / maxHp) * BAR_LENGTH);
         filled = Math.max(0, Math.min(BAR_LENGTH, filled));
         builder
-            .repeat("█", filled, barFillColor(hp, maxHp))
+            .repeat("█", filled, barFillcolour(hp, maxHp))
             .repeat("░", BAR_LENGTH - filled, palette().softDivider());
     }
 
@@ -60,7 +60,7 @@ public class CombatantRenderer {
         return c.status.toString();
     }
 
-    public String statusColor(String status) {
+    public String statuscolour(String status) {
         String s = status.toLowerCase();
         if (s.contains("normal")) return palette().neutral();
         if (s.contains("stun")) return palette().warning();
@@ -80,9 +80,9 @@ public class CombatantRenderer {
             builder.append("   ");
         }
 
-        builder.append(iconFor(c), colorFor(c))
+        builder.append(iconFor(c), colourFor(c))
                 .append(" ")
-                .bold(c.getName(), colorFor(c))
+                .bold(c.getName(), colourFor(c))
                 .append(" ");
 
         if (c.getTeam() == ActionContext.Team.PLAYER) {
@@ -92,12 +92,12 @@ public class CombatantRenderer {
         }
 
         builder.append("  ")
-                .appendLine(status, statusColor(status));
+                .appendLine(status, statuscolour(status));
 
         // Stats Line
         builder.append("    ")
                 .append("HP ", palette().neutral())
-                .append(String.format("%d/%d", c.getHp(), maxHp), hpColor(c.getHp(), maxHp))
+                .append(String.format("%d/%d", c.getHp(), maxHp), hpcolour(c.getHp(), maxHp))
                 .append("  ");
         
         appendHealthBar(c.getHp(), maxHp);

@@ -7,19 +7,19 @@ public interface ColourPalette extends Named, Describable {
     String reset();
     String bold();
 
-    // Brand/Theme colors
+    // Brand/Theme colours
     String primary();
     String secondary();
     String accent();
 
-    // Feedback colors
+    // Feedback colours
     String success();
     String danger();
     String warning();
     String info();
     String neutral();
 
-    // Role-based colors
+    // Role-based colours
     String player();
     String enemy();
     String boss();

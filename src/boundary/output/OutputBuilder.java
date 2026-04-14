@@ -15,7 +15,7 @@ public class OutputBuilder {
 
     // --- Formatters ---
 
-    private String color(String text, String format) {
+    private String colour(String text, String format) {
         return format + text + palette.reset();
     }
 
@@ -24,8 +24,8 @@ public class OutputBuilder {
         return this;
     }
 
-    public OutputBuilder repeat(String s, int count, String color) {
-        buffer.append(color(s.repeat(Math.max(0, count)), color));
+    public OutputBuilder repeat(String s, int count, String colour) {
+        buffer.append(colour(s.repeat(Math.max(0, count)), colour));
         return this;
     }
 
@@ -35,8 +35,8 @@ public class OutputBuilder {
 
     // --- Stateful Buffer Management ---
 
-    public OutputBuilder setColour(String color) {
-        this.currentColour = color;
+    public OutputBuilder setColour(String colour) {
+        this.currentColour = colour;
         return this;
     }
 
@@ -46,12 +46,12 @@ public class OutputBuilder {
     }
 
     public OutputBuilder append(String text) {
-        buffer.append(color(text, currentColour));
+        buffer.append(colour(text, currentColour));
         return this;
     }
 
-    public OutputBuilder append(String text, String color) {
-        buffer.append(color(text, color));
+    public OutputBuilder append(String text, String colour) {
+        buffer.append(colour(text, colour));
         return this;
     }
 
@@ -59,12 +59,12 @@ public class OutputBuilder {
         return append(text).newLine();
     }
 
-    public OutputBuilder appendLine(String text, String color) {
-        return append(text, color).newLine();
+    public OutputBuilder appendLine(String text, String colour) {
+        return append(text, colour).newLine();
     }
 
-    public OutputBuilder bold(String text, String color) {
-        buffer.append(color(palette.bold() + text, color));
+    public OutputBuilder bold(String text, String colour) {
+        buffer.append(colour(palette.bold() + text, colour));
         return this;
     }
 
@@ -83,8 +83,8 @@ public class OutputBuilder {
         return newLine();
     }
 
-    public OutputBuilder sectionTitle(String title, String titleColor) {
-        buffer.append(color(palette.bold() + title, titleColor));
+    public OutputBuilder sectionTitle(String title, String titlecolour) {
+        buffer.append(colour(palette.bold() + title, titlecolour));
         return newLine();
     }
 

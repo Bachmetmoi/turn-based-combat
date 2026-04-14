@@ -218,16 +218,16 @@ public class GameUI implements UserInterface {
         Difficulty[] diffs = Difficulty.values();
         for (int i = 0; i < diffs.length; i++) {
             String d = diffs[i].name();
-            String difficultyColor = palette().success();
+            String difficultycolour = palette().success();
 
             if ("MEDIUM".equalsIgnoreCase(d)) {
-                difficultyColor = palette().warning();
+                difficultycolour = palette().warning();
             } else if ("HARD".equalsIgnoreCase(d)) {
-                difficultyColor = palette().danger();
+                difficultycolour = palette().danger();
             }
 
             builder.append((i + 1) + ". ", palette().primary())
-                   .appendLine(d, difficultyColor);
+                   .appendLine(d, difficultycolour);
         }
         builder.print();
 
@@ -317,23 +317,23 @@ public class GameUI implements UserInterface {
     @Override
     public void displayActionResult(String msg) {
         String lower = msg.toLowerCase();
-        String chosenColor = palette().neutral();
+        String chosencolour = palette().neutral();
 
         if (lower.contains("victory") || lower.contains("heal") || lower.contains("recover")
                 || lower.contains("restored") || lower.contains("gain")) {
-            chosenColor = palette().success();
+            chosencolour = palette().success();
         } else if (lower.contains("defeated") || lower.contains("eliminated")
                 || lower.contains("dmg") || lower.contains("damage")
                 || lower.contains("hit") || lower.contains("attacks")
                 || lower.contains("critical hit")) {
-            chosenColor = palette().danger();
+            chosencolour = palette().danger();
         } else if (lower.contains("stun") || lower.contains("cooldown")
                 || lower.contains("buff") || lower.contains("debuff")
                 || lower.contains("prepare")) {
-            chosenColor = palette().warning();
+            chosencolour = palette().warning();
         }
 
-        builder.appendLine(">> " + msg, chosenColor).print();
+        builder.appendLine(">> " + msg, chosencolour).print();
     }
 
     @Override
@@ -383,8 +383,8 @@ public class GameUI implements UserInterface {
 
         builder.newLine()
             .sectionTitle("TURN", palette().primary())
-            .append(combatantRenderer.iconFor(owner) + " ", combatantRenderer.colorFor(owner))
-            .bold(owner.getName(), combatantRenderer.colorFor(owner)).newLine()
+            .append(combatantRenderer.iconFor(owner) + " ", combatantRenderer.colourFor(owner))
+            .bold(owner.getName(), combatantRenderer.colourFor(owner)).newLine()
             .softDivider()
             .print();
 

@@ -2,7 +2,7 @@ package boundary.output.colours;
 
 public class ClassicColourPalette implements ColourPalette {
     @Override public String getName() { return "Classic"; }
-    @Override public String getDescription() { return "Balanced high-contrast colors."; }
+    @Override public String getDescription() { return "Balanced high-contrast colours."; }
 
     @Override public String reset() { return "\u001B[0m"; }
     @Override public String bold() { return "\u001B[1m"; }

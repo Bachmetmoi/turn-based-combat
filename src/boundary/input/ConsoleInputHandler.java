@@ -28,11 +28,11 @@ public class ConsoleInputHandler implements InputHandler {
                     return val;
                 }
             } catch (NumberFormatException ignored) {
+                builder
+                    .newLine()
+                    .appendLine("Please enter a number between " + min + " and " + max + ".", palette.danger() + palette.bold())
+                    .print();
             }
-            builder
-                .newLine()
-                .append("Please enter a number between " + min + " and " + max + ".", palette.danger() + palette.bold())
-                .print();
         }
     }
 
